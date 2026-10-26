@@ -1,0 +1,27 @@
+{
+  "name": "wallet",
+  "version": "0.0.1",
+  "description": "Wallet",
+  "scripts": {
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "db:reset": "docker compose down -v && docker compose up -d db",
+    "db:logs": "docker compose logs -f db",
+    "dev": "npm run dev:watch --workspace=packages/api",
+    "dev:debug": "npm run dev:debug --workspace=packages/api",
+    "lint:check": "npm run lint:check --workspace=packages/api",
+    "build": "npm run build --workspace=packages/api",
+    "start": "npm run start --workspace=packages/api",
+    "test": "npm run test --workspace=packages/api",
+    "test:watch": "npm run test:watch --workspace=packages/api",
+    "test:cov": "npm run test:cov --workspace=packages/api",
+    "test:e2e": "npm run test:e2e --workspace=packages/api"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}

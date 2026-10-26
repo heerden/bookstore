@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:18
+    container_name: postgres_test
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: bookstore_test
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test -d bookstore_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+  wallet:
+    image: bookstore:latest
+    container_name: wallet
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: test
+      DATABASE_PASSWORD: test
+      DATABASE_NAME: bookstore_test
+      DB_URL: postgres://test:test@db/bookstore_test
+
+volumes:
+  pgdata:
